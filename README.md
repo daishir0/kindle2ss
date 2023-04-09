@@ -2,6 +2,8 @@
 
 This tool automatically takes screenshots of your Kindle screen and saves them as files.
 
+※日本語のREADMEは下部にあります。
+
 ## Requirements
 
 - Python3
