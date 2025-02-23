@@ -21,7 +21,7 @@ This tool automatically takes screenshots of your Kindle screen and saves them a
 1. Clone this repository.
 
 ```
-git clone https://github.com/example/kindle-screenshot.git
+git clone https://github.com/daishir0/kindle2ss.git
 ```
 
 2. Install the required Python libraries.
@@ -100,7 +100,7 @@ Kindleの画面を自動的にスクリーンショットし、ファイルと�
 1. 本リポジトリをクローンします。
 
 ```
-git clone https://github.com/example/kindle-screenshot.git
+git clone https://github.com/daishir0/kindle2ss.git
 ```
 
 2. 必要なPythonライブラリをインストールします。
