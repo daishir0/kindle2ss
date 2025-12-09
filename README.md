@@ -211,13 +211,15 @@ You can enable/disable OCR processing and configure OCR settings:
 ```python
 # Enable Yomitoku OCR processing (True: enabled, False: disabled)
 enable_ocr = True
-# OCR output format (md: Markdown, html: HTML, json: JSON, csv: CSV)
-ocr_format = "md"
+# OCR output format (pdf: PDF, md: Markdown, html: HTML, json: JSON, csv: CSV)
+ocr_format = "pdf"
 # Yomitoku lite mode (True: CPU optimized, False: normal mode)
 ocr_lite_mode = False
 ```
 
 When `enable_ocr` is set to `True`, the tool will automatically run Yomitoku OCR on all captured screenshots after the capture is complete. The OCR results will be saved in a folder named `{output_folder}_ocr`.
+
+**Recommended:** Use `pdf` format for the best OCR results with proper formatting and layout preservation.
 
 Also, the screenshot process will automatically stop if the same screen appears three times in a row. You can change this number.
 
@@ -446,13 +448,15 @@ OCR処理の有効化/無効化とOCR設定を変更できます:
 ```python
 # Yomitoku OCR処理を有効化 (True: 有効, False: 無効)
 enable_ocr = True
-# OCR出力形式 (md: Markdown, html: HTML, json: JSON, csv: CSV)
-ocr_format = "md"
+# OCR出力形式 (pdf: PDF, md: Markdown, html: HTML, json: JSON, csv: CSV)
+ocr_format = "pdf"
 # Yomitoku軽量モード (True: CPU最適化, False: 通常モード)
 ocr_lite_mode = False
 ```
 
 `enable_ocr`を`True`に設定すると、スクリーンショット取得完了後に自動的にYomitoku OCRが実行されます。OCR結果は`{出力フォルダ}_ocr`という名前のフォルダに保存されます。
+
+**推奨:** 最適なOCR結果を得るために、フォーマットとレイアウトが適切に保持される`pdf`形式を使用してください。
 
 また、3ページ連続で同じ画面が出現した場合に自動的にスクリーンショットを停止するようになっています。この回数を変更することができます。
 

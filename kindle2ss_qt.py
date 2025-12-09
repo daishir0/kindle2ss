@@ -499,7 +499,7 @@ class MainWindow(QMainWindow):
         format_layout = QHBoxLayout()
         format_layout.addWidget(QLabel("出力形式:"))
         self.ocr_format_combo = QComboBox()
-        self.ocr_format_combo.addItems(["md", "html", "json", "csv"])
+        self.ocr_format_combo.addItems(["pdf", "md", "html", "json", "csv"])
         format_layout.addWidget(self.ocr_format_combo)
         format_layout.addStretch()
         layout.addLayout(format_layout)

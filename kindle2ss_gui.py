@@ -168,9 +168,9 @@ class KindleScreenshotGUI:
         format_frame = tk.Frame(ocr_frame)
         format_frame.pack(fill=tk.X, pady=2)
         tk.Label(format_frame, text="出力形式:").pack(side=tk.LEFT)
-        self.ocr_format_var = tk.StringVar(value="md")
+        self.ocr_format_var = tk.StringVar(value="pdf")
         format_combo = ttk.Combobox(format_frame, textvariable=self.ocr_format_var,
-                                   values=["md", "html", "json", "csv"], width=10, state="readonly")
+                                   values=["pdf", "md", "html", "json", "csv"], width=10, state="readonly")
         format_combo.pack(side=tk.LEFT, padx=5)
 
         # 軽量モード

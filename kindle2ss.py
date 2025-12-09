@@ -20,8 +20,8 @@ h_foldername = "output"
 h_filename = "picture"
 # Yomitoku OCR処理を有効化 (True: 有効, False: 無効)
 enable_ocr = True
-# OCR出力形式 (md: Markdown, html: HTML, json: JSON, csv: CSV)
-ocr_format = "md"
+# OCR出力形式 (pdf: PDF, md: Markdown, html: HTML, json: JSON, csv: CSV)
+ocr_format = "pdf"
 # Yomitoku軽量モード (True: CPU最適化, False: 通常モード)
 ocr_lite_mode = False
 
