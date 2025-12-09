@@ -3,3 +3,4 @@ pywin32
 Pillow
 yomitoku
 pytesseract
+PySide6>=6.10.0
