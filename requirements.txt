@@ -2,3 +2,4 @@ pyautogui
 pywin32
 Pillow
 yomitoku
+pytesseract
