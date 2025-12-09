@@ -32,13 +32,36 @@ class RegionSelectorWindow(QWidget):
         super().__init__()
         self.start_pos = None
         self.current_pos = None
+        self.offset_x = 0
+        self.offset_y = 0
         self.setup_ui()
 
     def setup_ui(self):
         # フルスクリーン設定
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.showFullScreen()
+
+        # マルチモニター対応: すべてのスクリーンを含む仮想スクリーンのジオメトリを取得
+        app = QApplication.instance()
+        if app:
+            # すべてのスクリーンをカバーする領域を計算
+            screens = app.screens()
+            if screens:
+                min_x = min(screen.geometry().x() for screen in screens)
+                min_y = min(screen.geometry().y() for screen in screens)
+                max_x = max(screen.geometry().x() + screen.geometry().width() for screen in screens)
+                max_y = max(screen.geometry().y() + screen.geometry().height() for screen in screens)
+
+                # オフセットを保存
+                self.offset_x = min_x
+                self.offset_y = min_y
+
+                # ウィンドウをすべてのスクリーンをカバーするように設定
+                self.setGeometry(min_x, min_y, max_x - min_x, max_y - min_y)
+            else:
+                self.showFullScreen()
+        else:
+            self.showFullScreen()
 
         # カーソル設定
         self.setCursor(Qt.CrossCursor)
@@ -93,7 +116,10 @@ class RegionSelectorWindow(QWidget):
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton and self.start_pos:
             rect = QRect(self.start_pos, self.current_pos).normalized()
-            self.region_selected.emit(rect.x(), rect.y(), rect.width(), rect.height())
+            # マルチモニター環境のオフセットを適用
+            x = rect.x() + self.offset_x
+            y = rect.y() + self.offset_y
+            self.region_selected.emit(x, y, rect.width(), rect.height())
             self.close()
 
     def keyPressEvent(self, event):

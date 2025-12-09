@@ -26,10 +26,29 @@ class RegionSelector:
 
         # 全画面オーバーレイウィンドウ
         self.root = tk.Toplevel()
-        self.root.attributes('-fullscreen', True)
         self.root.attributes('-alpha', 0.3)
         self.root.configure(bg='gray')
         self.root.attributes('-topmost', True)
+
+        # マルチモニター対応: 仮想スクリーンのサイズを取得
+        # GetSystemMetrics を使用してすべてのモニターをカバーする領域を取得
+        SM_XVIRTUALSCREEN = 76
+        SM_YVIRTUALSCREEN = 77
+        SM_CXVIRTUALSCREEN = 78
+        SM_CYVIRTUALSCREEN = 79
+
+        x = win32api.GetSystemMetrics(SM_XVIRTUALSCREEN)
+        y = win32api.GetSystemMetrics(SM_YVIRTUALSCREEN)
+        width = win32api.GetSystemMetrics(SM_CXVIRTUALSCREEN)
+        height = win32api.GetSystemMetrics(SM_CYVIRTUALSCREEN)
+
+        # ウィンドウをすべてのモニターをカバーするように設定
+        self.root.geometry(f"{width}x{height}+{x}+{y}")
+        self.root.overrideredirect(True)
+
+        # オフセットを保存（座標計算用）
+        self.offset_x = x
+        self.offset_y = y
 
         # キャンバス
         self.canvas = tk.Canvas(self.root, cursor="cross", bg='gray', highlightthickness=0)
@@ -70,6 +89,10 @@ class RegionSelector:
 
         width = right - left
         height = bottom - top
+
+        # マルチモニター環境のオフセットを適用
+        left += self.offset_x
+        top += self.offset_y
 
         self.root.destroy()
         self.callback(left, top, width, height)
