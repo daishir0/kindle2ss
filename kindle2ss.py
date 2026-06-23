@@ -6,6 +6,7 @@ import win32api
 import time
 import os
 import datetime
+import subprocess
 from PIL import Image
 
 
@@ -17,6 +18,12 @@ span = 1
 h_foldername = "output"
 # 出力ファイル頭文字
 h_filename = "picture"
+# Yomitoku OCR処理を有効化 (True: 有効, False: 無効)
+enable_ocr = True
+# OCR出力形式 (pdf: PDF, md: Markdown, html: HTML, json: JSON, csv: CSV)
+ocr_format = "pdf"
+# Yomitoku軽量モード (True: CPU最適化, False: 通常モード)
+ocr_lite_mode = False
 
 # ５秒の間に、スクショしたいkindleの画面に移動
 time.sleep(5)
@@ -82,3 +89,34 @@ while True:
 
     # 処理中のページ番号を画面に出力
     print(f"Processing page {p}")
+
+# スクリーンショット取得完了メッセージ
+print(f"\nScreenshot capture completed. Total pages: {p}")
+print(f"Images saved in: {folder_name}")
+
+# Yomitoku OCR処理
+if enable_ocr:
+    print("\n--- Starting Yomitoku OCR processing ---")
+    ocr_output_dir = folder_name + "_ocr"
+
+    # yomitokuコマンドを構築
+    cmd = ["yomitoku", folder_name, "-f", ocr_format, "-o", ocr_output_dir, "-v", "--figure"]
+
+    # 軽量モードが有効な場合
+    if ocr_lite_mode:
+        cmd.extend(["--lite", "-d", "cpu"])
+
+    try:
+        print(f"Running command: {' '.join(cmd)}")
+        result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+        print(result.stdout)
+        print(f"\n--- OCR processing completed ---")
+        print(f"OCR results saved in: {ocr_output_dir}")
+    except subprocess.CalledProcessError as e:
+        print(f"\nError during OCR processing: {e}")
+        print(f"Error output: {e.stderr}")
+    except FileNotFoundError:
+        print("\nError: yomitoku command not found.")
+        print("Please install yomitoku: pip install yomitoku")
+else:
+    print("\nOCR processing is disabled. Set enable_ocr=True to enable.")
